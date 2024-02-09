@@ -25,9 +25,27 @@ class UserService {
             database.push(newUser);
             return newUser;
         } catch (error) {
-            return { success: false, error: "Failed to create new user" };
+            return {success: false, error: "Failed to create new user"};
         }
     }
+
+    async updateUserData(userId, username, age, hobbies) {
+        try {
+            const user: IUser = await this.getUserById(userId);
+            if (user === null) {
+                return  null
+            } else {
+                user.age = age;
+                user.username = username;
+                user.hobbies = hobbies;
+                return user;
+            }
+
+        } catch (error) {
+            return {success: false, error: "Failed to update user"}
+        }
+    }
+
 }
 
 export default new UserService();

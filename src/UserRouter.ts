@@ -19,11 +19,10 @@ export const userRouter = (request, response) => {
             break;
 
         case 'PUT':
-            response.writeHead(200, {'Content-Type': 'application/json'});
-            response.end(JSON.stringify({message: `Update user with ID ${userId}`}));
+            userController.updateUser(request, response);
             break;
-        case 'DELETE':
 
+        case 'DELETE':
             response.writeHead(200, {'Content-Type': 'application/json'});
             response.end(JSON.stringify({message: `Delete user with ID ${userId}`}));
             break;

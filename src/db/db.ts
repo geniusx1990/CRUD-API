@@ -8,13 +8,13 @@ export const database: IUser[] = [{
 
 },
     {
-        id: '2',
+        id: '109156be-c4fb-41ea-b1b4-efe1671c5836',
         username: 'Inga',
         age: 28,
         hobbies: ['Node.js', 'Sport'],
     },
     {
-        id: '3',
+        id: '45637ec4-c85f-11ea-87d0-0242ac130003',
         username: 'Alex',
         age: 28,
         hobbies: ['Algorithms', 'SPA', 'Books'],
