@@ -1,7 +1,7 @@
 import * as http from "http";
 import * as url from "url";
 import 'dotenv/config';
-import {router} from './router';
+import {router} from './router/router';
 const server = http.createServer();
 
 server.on('request', (request, response) => {

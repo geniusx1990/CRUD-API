@@ -99,6 +99,33 @@ class UserController {
             response.end(JSON.stringify({error: 'Invalid JSON in request body'}));
         }
     }
+
+    async deleteUser(request, response) {
+        const userId = request.url.split('/')[3]
+
+        if (!uuidValidate(userId)) {
+            response.writeHead(400, {'Content-Type': 'application/json'});
+            response.end(JSON.stringify({message: "Invalid userId"}));
+            return;
+        }
+        try {
+            const result = await UserService.deleteUserData(userId);
+            if (result === null) {
+                response.writeHead(404, {'Content-Type': 'application/json'});
+                response.end(JSON.stringify({message: "User doesn't exist"}));
+                return;
+            }
+
+            response.writeHead(204, {'Content-Type': 'application/json'});
+            response.end();
+
+
+        } catch (error) {
+            response.writeHead(500, {'Content-Type': 'application/json'});
+            response.end(JSON.stringify({error: 'Internal Server Error'}));
+        }
+
+    }
 }
 
 export default new UserController();

@@ -1,4 +1,4 @@
-import userController from "./controllers/UserController";
+import userController from "../controllers/UserController";
 
 export const userRouter = (request, response) => {
 
@@ -23,8 +23,7 @@ export const userRouter = (request, response) => {
             break;
 
         case 'DELETE':
-            response.writeHead(200, {'Content-Type': 'application/json'});
-            response.end(JSON.stringify({message: `Delete user with ID ${userId}`}));
+            userController.deleteUser(request, response);
             break;
 
         default:

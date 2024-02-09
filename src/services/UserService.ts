@@ -33,7 +33,7 @@ class UserService {
         try {
             const user: IUser = await this.getUserById(userId);
             if (user === null) {
-                return  null
+                return null
             } else {
                 user.age = age;
                 user.username = username;
@@ -46,6 +46,14 @@ class UserService {
         }
     }
 
+    async deleteUserData(userId) {
+        const index = database.findIndex(user => user.id === userId);
+        if (index !== -1) {
+            database.splice(index, 1);
+        } else {
+            return null
+        }
+    }
 }
 
 export default new UserService();
