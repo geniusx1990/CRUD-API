@@ -1,5 +1,8 @@
+import { validate as uuidValidate } from 'uuid';
 import UserService from "../services/UserService";
 import {handleJsonBody} from '../utils/handleJsonBody';
+import {checkData} from "../utils/checkData";
+
 class UserController {
     async getUsers(request, response) {
         try {
@@ -17,7 +20,7 @@ class UserController {
         const userId = request.url.split('/')[3]
         const user = await UserService.getUserById(userId);
 
-        if (isNaN(Number(userId)) || Number(userId) <= 0) {
+        if (!uuidValidate(userId)) {
             response.writeHead(400, {'Content-Type': 'application/json'});
             response.end(JSON.stringify({message: "Invalid userId"}));
             return;
@@ -44,9 +47,15 @@ class UserController {
         handleJsonBody(request, async (error, body) => {
             if (error) {
                 response.writeHead(400, {'Content-Type': 'application/json'});
-                response.end(JSON.stringify({ error: 'Invalid JSON in request body' }));
+                response.end(JSON.stringify({error: 'Invalid JSON in request body'}));
             } else {
-                const { username, age, hobbies } = body;
+                const {username, age, hobbies} = body;
+
+                if (checkData(username, age, hobbies) === false) {
+                    response.writeHead(400, {'Content-Type': 'application/json'});
+                    response.end(JSON.stringify({message: 'Invalid user data. Please check the request data and try again.'}));
+                    return
+                }
 
                 try {
                     const newUser = await UserService.createNewUser(username, age, hobbies);
@@ -55,7 +64,7 @@ class UserController {
                     response.end(JSON.stringify(newUser));
                 } catch (error) {
                     response.writeHead(500, {'Content-Type': 'application/json'});
-                    response.end(JSON.stringify({ error: 'Internal Server Error' }));
+                    response.end(JSON.stringify({error: 'Internal Server Error'}));
                 }
             }
         });
