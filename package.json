@@ -8,6 +8,7 @@
     "start:prod": "tsc && node dist/index.js",
     "start": "ts-node src/index.ts",
     "build": "tsc",
+    "start:multi": "node src/cluster.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

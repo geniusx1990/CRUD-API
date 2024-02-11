@@ -2,6 +2,8 @@ import * as http from "http";
 import * as url from "url";
 import 'dotenv/config';
 import {router} from './router/router';
+import * as cluster from "cluster";
+const pid = process.pid;
 const server = http.createServer();
 
 server.on('request', (request, response) => {
@@ -17,4 +19,7 @@ server.on('request', (request, response) => {
     }
 });
 
-server.listen(process.env.PORT);
+server.listen((Number(process.env.PORT) + pid), () => {
+    console.log(`Worker listening on port ${Number(process.env.PORT) + pid} pid = ${pid}`);
+
+});
